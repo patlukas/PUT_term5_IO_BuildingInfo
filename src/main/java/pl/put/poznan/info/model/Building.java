@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Building extends Location{
 
-    private List<Location> levels;
+    private List<Level> levels;
 
     public Building(int id, String name){
         super(id, name);
@@ -16,7 +16,7 @@ public class Building extends Location{
         this.levels.add(level);
     }
 
-    public List<Location> getLevels(){
+    public List<Level> getLevels(){
         return this.levels;
     }
 
@@ -27,5 +27,23 @@ public class Building extends Location{
             buildingArea += level.getArea();
         }
         return buildingArea;
+    }
+
+    @Override
+    public float getCube() {
+        float buildingCube = 0;
+        for (Location level : levels){
+            buildingCube += level.getCube();
+        }
+        return buildingCube;
+    }
+
+    @Override
+    public float getLightning() {
+        float buildingLight = 0;
+        for (Location level : levels){
+            buildingLight += level.getLightning();
+        }
+        return buildingLight;
     }
 }

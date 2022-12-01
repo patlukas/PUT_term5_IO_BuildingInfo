@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Level extends Location{
 
-    private List<Location> rooms;
+    private List<Room> rooms;
 
     public Level(int id, String name){
         super(id, name);
@@ -25,6 +25,10 @@ public class Level extends Location{
         this.rooms.add(room);
     }
 
+    public List<Room> getRooms(){
+        return this.rooms;
+    }
+
     @Override
     public float getArea() {
         float levelArea = 0;
@@ -32,5 +36,23 @@ public class Level extends Location{
             levelArea += room.getArea();
         }
         return levelArea;
+    }
+
+    @Override
+    public float getCube() {
+        float levelCube = 0;
+        for (Location room : rooms){
+            levelCube += room.getCube();
+        }
+        return levelCube;
+    }
+
+    @Override
+    public float getLightning() {
+        float levelLight = 0;
+        for (Location room : rooms){
+            levelLight += room.getLightning();
+        }
+        return levelLight;
     }
 }

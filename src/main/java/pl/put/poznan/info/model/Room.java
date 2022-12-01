@@ -27,4 +27,14 @@ public class Room extends Location{
     public float getArea() {
         return this.area;
     }
+
+    @Override
+    public float getCube() {
+        return this.cube;
+    }
+
+    @Override
+    public float getLightning() {
+        return this.light;
+    }
 }

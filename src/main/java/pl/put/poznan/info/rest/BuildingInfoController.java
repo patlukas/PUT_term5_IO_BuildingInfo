@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import pl.put.poznan.info.logic.BuildingInfo;
 import pl.put.poznan.info.model.Building;
 import pl.put.poznan.info.model.Level;
+import pl.put.poznan.info.model.Location;
 import pl.put.poznan.info.model.Room;
 
 import java.sql.Array;
@@ -24,69 +25,183 @@ public class BuildingInfoController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildingInfoController.class);
 
-//    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-//    public String get(@PathVariable String text,
-//                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] infos) {
+    //example request body
+//    {
+//        "id": 1,
+//            "name": "BudynekTestowy",
+//            "levels": [
+//        {
+//            "id": 2,
+//                "name": "pietro1",
+//                "rooms": [
+//            {
+//                "id": 3,
+//                    "name": "pokoj11",
+//                    "area": 10,
+//                    "cube": 20,
+//                    "heating": 10.5,
+//                    "light": 5.5
+//            },
+//            {
+//                "id": 4,
+//                    "name": "pokoj12",
+//                    "area": 12,
+//                    "cube": 24,
+//                    "heating": 10.5,
+//                    "light": 5.5
+//            }
+//            ]
+//        },
+//        {
+//            "id": 5,
+//                "name": "pietro1",
+//                "rooms": [
+//            {
+//                "id": 6,
+//                    "name": "pokoj21",
+//                    "area": 5.0,
+//                    "cube": 10.0,
+//                    "heating": 10.5,
+//                    "light": 5.5
+//            }
+//            ]
+//        }
+//    ]
 //
-//        // log the parameters
-//        logger.debug(text);
-//        logger.debug("JD");
-//        logger.debug(Arrays.toString(infos));
 //
-//        // perform the transformation, you should run your logic here, below is just a silly example
-//        BuildingInfo informer = new BuildingInfo(infos);
-//        return informer.info(text);
 //    }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String post(@RequestBody String reqBody) {
+
+    @RequestMapping(value = "/area/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBuildingArea(@RequestBody String reqBody) {
+
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
 
 
-        JSONObject obj = new JSONObject(reqBody);
-        Building building = new Building((int) obj.get("id"), (String) obj.get("name"));
-        logger.debug(building.getId() + " " + building.getName());
-        JSONArray arr = obj.getJSONArray("levels");
-        //logger.debug(arr.toString());
-        for (Object pietro : arr){
-            JSONObject jsonLevel = new JSONObject(pietro.toString());
-            Level level = new Level( (int) jsonLevel.get("id"), (String) jsonLevel.get("name"));
+        float areaAll = building.getArea();
 
-            JSONArray rooms = jsonLevel.getJSONArray("rooms");
-            for (Object r : rooms){
-                //JSONObject jsonRoom = new JSONObject(r.toString());
-                Room room = new Room(new JSONObject(r.toString()));
-                level.addRoom(room);
+        JSONObject res = new JSONObject();
+        res.put("area", areaAll);
+        return res.toString();
+    }
+
+    @RequestMapping(value = "/cube/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBuildingCube(@RequestBody String reqBody) {
+
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+
+
+        float cubeAll = building.getCube();
+
+        JSONObject res = new JSONObject();
+        res.put("cube", cubeAll);
+        return res.toString();
+    }
+
+    @RequestMapping(value = "/light/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBuildingLight(@RequestBody String reqBody) {
+
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+
+
+        float lightAll = building.getLightning();
+
+        JSONObject res = new JSONObject();
+        res.put("light", lightAll);
+        return res.toString();
+    }
+
+    @RequestMapping(value = "/area/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAreaById(@PathVariable int id, @RequestBody String reqBody) {
+
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+
+
+        JSONObject res = new JSONObject();
+
+        if (building.getId() == id) {
+            res.put("area", building.getArea());
+            res.put("id", id);
+        } else {
+            for (Level lvl : building.getLevels()){
+                if (lvl.getId() == id) {
+                    res.put("area", lvl.getArea());
+                    res.put("id", id);
+                    break;
+                }
+                for (Room room : lvl.getRooms()) {
+                    if (room.getId() == id) {
+                        res.put("area", room.getArea());
+                        res.put("id", id);
+                        break;
+                    }
+                }
             }
-
-
-            building.addLevel(level);
-            logger.debug(pietro.toString());
-            //logger.debug(pietro.get("id").toString());
         }
-//        JSONObject pietro = (JSONObject)arr.get(0);
-        logger.debug(building.getLevels().toString());
-//        logger.debug(pietro.get("id").toString());
-//        logger.debug(pietro.get("rooms").toString());
+        //if ()
+        return res.toString();
+    }
 
-//
+    @RequestMapping(value = "/cube/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getCubeById(@PathVariable int id, @RequestBody String reqBody) {
 
-
-//        if (obj.has("siema")) {
-//            logger.debug("ma");
-//        } else {
-//            logger.debug("nie ma");
-//        }
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
 
 
-        //logger.debug(obj.toString());
+        JSONObject res = new JSONObject();
+
+        if (building.getId() == id) {
+            res.put("cube", building.getCube());
+            res.put("id", id);
+        } else {
+            for (Level lvl : building.getLevels()){
+                if (lvl.getId() == id) {
+                    res.put("cube", lvl.getCube());
+                    res.put("id", id);
+                    break;
+                }
+                for (Room room : lvl.getRooms()) {
+                    if (room.getId() == id) {
+                        res.put("cube", room.getCube());
+                        res.put("id", id);
+                        break;
+                    }
+                }
+            }
+        }
+        //if ()
+        return res.toString();
+    }
+
+    @RequestMapping(value = "/light/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getLightById(@PathVariable int id, @RequestBody String reqBody) {
+
+        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
 
 
+        JSONObject res = new JSONObject();
 
-        // perform the transformation, you should run your logic here, below is just a silly example
-        //BuildingInfo informer = new BuildingInfo(infos);
-        //return informer.info(text);
-        //return Arrays.toString(infos);
-        return obj.toString();
+        if (building.getId() == id) {
+            res.put("light", building.getLightning());
+            res.put("id", id);
+        } else {
+            for (Level lvl : building.getLevels()){
+                if (lvl.getId() == id) {
+                    res.put("light", lvl.getLightning());
+                    res.put("id", id);
+                    break;
+                }
+                for (Room room : lvl.getRooms()) {
+                    if (room.getId() == id) {
+                        res.put("light", room.getLightning());
+                        res.put("id", id);
+                        break;
+                    }
+                }
+            }
+        }
+        //if ()
+        return res.toString();
     }
 
 }
