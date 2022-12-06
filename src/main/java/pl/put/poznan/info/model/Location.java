@@ -8,6 +8,7 @@ public abstract class Location {
         this.id = id;
         this.name = name;
     }
+
     protected Location(){}
 
     public int getId(){

@@ -11,6 +11,10 @@ public class Building extends Location{
         super(id, name);
         this.levels = new LinkedList<>();
     }
+    public Building(int id){
+        super(id, "");
+        this.levels = new LinkedList<>();
+    }
 
     public void addLevel(Level level){
         this.levels.add(level);

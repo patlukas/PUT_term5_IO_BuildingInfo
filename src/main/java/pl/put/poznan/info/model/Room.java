@@ -15,8 +15,15 @@ public class Room extends Location{
         this.heating = heating;
         this.light = light;
     }
+    public Room(int id, float area, float cube, float heating, float light){
+        super(id, "name");
+        this.area = area;
+        this.cube = cube;
+        this.heating = heating;
+        this.light = light;
+    }
     public Room(JSONObject jsonRoom){
-        super( (int) jsonRoom.get("id"), (String) jsonRoom.get("name"));
+        super( jsonRoom.getInt("id"), jsonRoom.getString("name"));
         this.area =  jsonRoom.getFloat("area");
         this.cube =  jsonRoom.getFloat("cube");
         this.heating =  jsonRoom.getFloat("heating");

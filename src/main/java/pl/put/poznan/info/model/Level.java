@@ -13,13 +13,13 @@ public class Level extends Location{
         super(id, name);
         this.rooms = new LinkedList<>();
     }
+    public Level(int id){
+        super(id, "");
+        this.rooms = new LinkedList<>();
+    }
 
 
 
-//    public Level(JSONObject level){
-//        super( (int) level.get("id"), (String) level.get("name"));
-//
-//    }
 
     public void addRoom(Room room){
         this.rooms.add(room);
