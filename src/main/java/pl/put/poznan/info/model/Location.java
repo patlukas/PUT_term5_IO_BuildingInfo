@@ -4,11 +4,17 @@ public abstract class Location {
     private int id;
     private String name;
 
+    protected Location(){}
+
+    protected Location(int id){
+        this.id = id;
+        this.name = "";
+    }
+
     protected Location(int id, String name){
         this.id = id;
         this.name = name;
     }
-    protected Location(){}
 
     public int getId(){
         return this.id;

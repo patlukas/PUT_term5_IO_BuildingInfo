@@ -1,7 +1,5 @@
 package pl.put.poznan.info.model;
 
-import org.json.JSONObject;
-
 public class Room extends Location{
     private float area;
     private float cube;
@@ -14,13 +12,6 @@ public class Room extends Location{
         this.cube = cube;
         this.heating = heating;
         this.light = light;
-    }
-    public Room(JSONObject jsonRoom){
-        super( (int) jsonRoom.get("id"), (String) jsonRoom.get("name"));
-        this.area =  jsonRoom.getFloat("area");
-        this.cube =  jsonRoom.getFloat("cube");
-        this.heating =  jsonRoom.getFloat("heating");
-        this.light = jsonRoom.getFloat("light");
     }
 
     @Override

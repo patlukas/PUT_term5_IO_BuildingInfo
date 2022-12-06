@@ -7,6 +7,15 @@ public class Building extends Location{
 
     private List<Level> levels;
 
+    public Building(){
+        this.levels = new LinkedList<>();
+    }
+
+    public Building(int id){
+        super(id);
+        this.levels = new LinkedList<>();
+    }
+
     public Building(int id, String name){
         super(id, name);
         this.levels = new LinkedList<>();
