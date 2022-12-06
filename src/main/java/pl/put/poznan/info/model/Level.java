@@ -49,6 +49,6 @@ public class Level extends Location{
         for (Location room : rooms){
             levelLight += room.getLightning();
         }
-        return levelLight;
+        return levelLight / getArea();
     }
 }

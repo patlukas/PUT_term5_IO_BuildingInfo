@@ -53,6 +53,6 @@ public class Building extends Location{
         for (Location level : levels){
             buildingLight += level.getLightning();
         }
-        return buildingLight;
+        return buildingLight / levels.size();
     }
 }

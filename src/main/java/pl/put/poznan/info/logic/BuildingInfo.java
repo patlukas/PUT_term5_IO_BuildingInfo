@@ -2,8 +2,6 @@ package pl.put.poznan.info.logic;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.put.poznan.info.exceptions.JsonInputException;
 import pl.put.poznan.info.model.Building;
 import pl.put.poznan.info.model.Level;
