@@ -1,6 +1,4 @@
 package pl.put.poznan.info.rest;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -18,53 +16,6 @@ import pl.put.poznan.info.model.Building;
 public class BuildingInfoController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuildingInfoController.class);
-
-    //example request body
-//    {
-//        "id": 1,
-//            "name": "BudynekTestowy",
-//            "levels": [
-//              {
-//                  "id": 2,
-//                  "name": "pietro1",
-//                  "rooms": [
-//                      {
-//                          "id": 3,
-//                          "name": "pokoj11",
-//                           "area": 10,
-//                           "cube": 20,
-//                           "heating": 10.5,
-//                          "light": 5.5
-//                       },
-//                       {
-//                          "id": 4,
-//                          "name": "pokoj12",
-//                          "area": 12,
-//                          "cube": 24,
-//                          "heating": 10.5,
-//                          "light": 5.5
-//                      }
-//                  ]
-//              },
-//              {
-//                  "id": 5,
-//                  "name": "pietro1",
-//                  "rooms": [
-//                      {
-//                          "id": 6,
-//                          "name": "pokoj21",
-//                          "area": 5.0,
-//                          "cube": 10.0,
-//                          "heating": 10.5,
-//                          "light": 5.5
-//                      }
-//                  ]
-//               }
-//          ]
-//
-//
-//    }
-
 
     @RequestMapping(value = "/area/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getBuildingArea(@RequestBody String reqBody) {
