@@ -88,6 +88,7 @@ public class Building extends Location{
     }
 
     public Location getLocationById(int id) throws JsonInputException{
+
         if(getId() == id) return this;
         for(Level level : levels) {
             if(level.getId() == id) return level;

@@ -2,10 +2,13 @@ package pl.put.poznan.info.logic;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.info.exceptions.JsonInputException;
 import pl.put.poznan.info.model.Building;
 import pl.put.poznan.info.model.Level;
 import pl.put.poznan.info.model.Room;
+import pl.put.poznan.info.rest.BuildingInfoController;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -15,12 +18,15 @@ import java.util.Set;
 
 public class BuildingInfo {
 
+    private static final Logger logger = LoggerFactory.getLogger(BuildingInfoController.class);
+
     public static Building createBuilding(JSONObject jsonObject) throws JsonInputException {
+        logger.debug(jsonObject.toString());
         Building building = initBuilding(jsonObject);
         addLevelsInfo(building, jsonObject);
 
         checkAllIdIsUnique(building);
-
+        logger.info("CreateBuilding " + building.getName() + " success");
         return building;
     }
 
