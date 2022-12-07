@@ -51,4 +51,13 @@ public class Level extends Location{
         }
         return levelLight / getArea();
     }
+
+    @Override
+    public float getHeating() {
+        float levelHeating = 0;
+        for (Location room : rooms){
+            levelHeating += room.getHeating();
+        }
+        return levelHeating / getCube();
+    }
 }

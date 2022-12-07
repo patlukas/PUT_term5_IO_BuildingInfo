@@ -96,6 +96,16 @@ public class BuildingInfoController {
         }
     }
 
+    @RequestMapping(value = "/heating/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBuildingHeating(@RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getHeating());
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/area/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAreaById(@PathVariable int id, @RequestBody String reqBody) {
         try {
@@ -121,6 +131,16 @@ public class BuildingInfoController {
         try {
             Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
             return createSuccessReturnJsonString(building.getLightById(id));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/heating/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getHeatingById(@PathVariable int id, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getHeatingById(id));
         } catch (JsonInputException e) {
             return createErrorReturnJsonString(e.getMessage());
         }

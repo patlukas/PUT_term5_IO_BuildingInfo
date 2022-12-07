@@ -58,6 +58,15 @@ public class Building extends Location{
         return buildingLight / levels.size();
     }
 
+    @Override
+    public float getHeating() {
+        float buildingHeating = 0;
+        for (Location level : levels){
+            buildingHeating += level.getHeating();
+        }
+        return buildingHeating / levels.size();
+    }
+
     public float getAreaById(int id) throws JsonInputException{
         Location location = getLocationById(id);
         return location.getArea();
@@ -71,6 +80,11 @@ public class Building extends Location{
     public float getLightById(int id) throws JsonInputException{
         Location location = getLocationById(id);
         return location.getLightning();
+    }
+
+    public float getHeatingById(int id) throws JsonInputException{
+        Location location = getLocationById(id);
+        return location.getHeating();
     }
 
     public Location getLocationById(int id) throws JsonInputException{

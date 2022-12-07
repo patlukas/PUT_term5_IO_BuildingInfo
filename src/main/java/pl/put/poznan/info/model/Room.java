@@ -28,4 +28,7 @@ public class Room extends Location{
     public float getLightning() {
         return this.light;
     }
+
+    @Override
+    public float getHeating() { return this.heating; }
 }
