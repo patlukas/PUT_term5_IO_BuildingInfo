@@ -95,99 +95,36 @@ public class BuildingInfoController {
             return createErrorReturnJsonString(e.getMessage());
         }
     }
-//
-//    @RequestMapping(value = "/area/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String getAreaById(@PathVariable int id, @RequestBody String reqBody) {
-//
-//        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
-//
-//
-//        JSONObject res = new JSONObject();
-//
-//        if (building.getId() == id) {
-//            res.put("area", building.getArea());
-//            res.put("id", id);
-//        } else {
-//            for (Level lvl : building.getLevels()){
-//                if (lvl.getId() == id) {
-//                    res.put("area", lvl.getArea());
-//                    res.put("id", id);
-//                    break;
-//                }
-//                for (Room room : lvl.getRooms()) {
-//                    if (room.getId() == id) {
-//                        res.put("area", room.getArea());
-//                        res.put("id", id);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        //if ()
-//        return res.toString();
-//    }
-//
-//    @RequestMapping(value = "/cube/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String getCubeById(@PathVariable int id, @RequestBody String reqBody) {
-//
-//        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
-//
-//
-//        JSONObject res = new JSONObject();
-//
-//        if (building.getId() == id) {
-//            res.put("cube", building.getCube());
-//            res.put("id", id);
-//        } else {
-//            for (Level lvl : building.getLevels()){
-//                if (lvl.getId() == id) {
-//                    res.put("cube", lvl.getCube());
-//                    res.put("id", id);
-//                    break;
-//                }
-//                for (Room room : lvl.getRooms()) {
-//                    if (room.getId() == id) {
-//                        res.put("cube", room.getCube());
-//                        res.put("id", id);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        //if ()
-//        return res.toString();
-//    }
-//
-//    @RequestMapping(value = "/light/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String getLightById(@PathVariable int id, @RequestBody String reqBody) {
-//
-//        Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
-//
-//
-//        JSONObject res = new JSONObject();
-//
-//        if (building.getId() == id) {
-//            res.put("light", building.getLightning());
-//            res.put("id", id);
-//        } else {
-//            for (Level lvl : building.getLevels()){
-//                if (lvl.getId() == id) {
-//                    res.put("light", lvl.getLightning());
-//                    res.put("id", id);
-//                    break;
-//                }
-//                for (Room room : lvl.getRooms()) {
-//                    if (room.getId() == id) {
-//                        res.put("light", room.getLightning());
-//                        res.put("id", id);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        //if ()
-//        return res.toString();
-//    }
+
+    @RequestMapping(value = "/area/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAreaById(@PathVariable int id, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getAreaById(id));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/cube/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getCubeById(@PathVariable int id, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getCubeById(id));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/light/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getLightById(@PathVariable int id, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getLightById(id));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
 
     private String createSuccessReturnJsonString(float result) {
         JSONObject res = new JSONObject();

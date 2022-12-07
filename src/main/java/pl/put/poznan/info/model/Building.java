@@ -1,5 +1,7 @@
 package pl.put.poznan.info.model;
 
+import pl.put.poznan.info.exceptions.JsonInputException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,4 +57,31 @@ public class Building extends Location{
         }
         return buildingLight / levels.size();
     }
+
+    public float getAreaById(int id) throws JsonInputException{
+        Location location = getLocationById(id);
+        return location.getArea();
+    }
+
+    public float getCubeById(int id) throws JsonInputException{
+        Location location = getLocationById(id);
+        return location.getCube();
+    }
+
+    public float getLightById(int id) throws JsonInputException{
+        Location location = getLocationById(id);
+        return location.getLightning();
+    }
+
+    public Location getLocationById(int id) throws JsonInputException{
+        if(getId() == id) return this;
+        for(Level level : levels) {
+            if(level.getId() == id) return level;
+            for(Room room : level.getRooms()) {
+                if(room.getId() == id) return room;
+            }
+        }
+        throw new JsonInputException("Nie istnieje pomieszczenie o żądanym Id");
+    }
+
 }
