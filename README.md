@@ -41,8 +41,32 @@ Dla administratorów budynków, którzy pragną optymalizować koszty zarządzan
   - średnie zużycie energii grzewczej na m^3 na poziomie, jeżeli lokacja o ID jest poziomem
   - średnie zużycie energii grzewczej na poziomach, jeżeli lokacja o ID jest budynkiem
 
+### Request API Body
+```
+{
+  "id": <int> - unikalny identyfikator
+  "name": <String> - opcjonalna nazwa
+  "levels": [
+    {
+        "id": <int> - unikalny identyfikator
+        "name": <String> - opcjonalna nazwa
+        "rooms": [
+            {
+                "id": <int> - unikalny identyfikator
+                "name": <String> - opcjonalna nazwa
+                "area": <Float dodatni> - powierzchnia pomieszczzenia w m^2
+                "cube": <Float dodatni> - kubatura pomieszczenia w m^3
+                "heating": <Float nieujemny> - poziom zużycia energii grzewczej w pomieszczeniu
+                "light": <Float nieujemny> - łączna moc oświetlenia w pomieszczeniu
+            }...
+        ]
+    }...
+  ]
+}
+```
+
 ## Przykłady
-#### Przykład 1
+### Przykład 1
 Request body:
 ```json
   {
@@ -82,15 +106,22 @@ Request body:
     ]
   }
 ```
-
-  - **[POST] /api/area/id/6**
+- **[POST] /api/area/all**
     - Odpowiedź:
-    ```json
-    {
-      "result": 2,
-      "status": "Success"
-    }
-    ```
+  ```json
+  {
+    "result": 24,
+    "status": "Success"
+  }
+  ```
+- **[POST] /api/area/id/6**
+  - Odpowiedź:
+  ```json
+  {
+    "result": 2,
+    "status": "Success"
+  }
+  ```
 - **[POST] /api/area/id/999**
   - Odpowiedź:
   ```json
@@ -98,4 +129,77 @@ Request body:
     "message": "Nie istnieje pomieszczenie o żądanym Id",
     "status": "Error"
   }
+  ```
+- **[POST] /api/cube/all**
+    - Odpowiedź:
+  ```json
+  {
+    "result": 54,
+    "status": "Success"
+  }
+  ```
+### Przykład 2
+Request body:
+```json
+  {
+    "id": 99,
+    "name": "Budynek",
+    "levels": [
+      {
+        "id": -1000,
+        "name": "Poziom",
+        "rooms": [
+          {
+            "id": -5,
+            "name": "pomieszczenie",
+            "area": 1,
+            "cube": 2,
+            "heating": 3,
+            "light": 4
+          },
+          {
+            "id": -6,
+            "name": "pomieszczenie",
+            "area": 2,
+            "cube": 1,
+            "heating": 3,
+            "light": 4
+          },
+          {
+            "id": -7,
+            "name": "pokój",
+            "area": 1,
+            "cube": 2,
+            "heating": 3,
+            "light": 4
+          },
+          {
+            "id": -8,
+            "name": "pokój",
+            "area": 1,
+            "cube": 2,
+            "heating": 3,
+            "light": 4
+          }
+        ]
+      }
+    ]
+  }
+```
+- **[POST] /api/light/all**
+    - Odpowiedź:
+  ```json
+    {
+      "result": 3.2,
+      "status": "Success"
+    }
+  ```
+
+- **[POST] /api/heating/id/-6**
+    - Odpowiedź:
+  ```json
+    {
+      "result": 3,
+      "status": "Success"
+    }
   ```
