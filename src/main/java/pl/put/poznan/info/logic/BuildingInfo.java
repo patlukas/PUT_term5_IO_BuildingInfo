@@ -91,7 +91,7 @@ public class BuildingInfo {
         if(!jsonObject.has(key)) throw new JsonInputException(key +" jest obowiązkowe");
         float val;
         try {
-            val =  jsonObject.getInt(key);
+            val =  jsonObject.getFloat(key);
         } catch (Exception e) {
             throw new JsonInputException(key + " musi być liczbą");
         }
