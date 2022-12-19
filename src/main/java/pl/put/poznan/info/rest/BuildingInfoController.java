@@ -13,6 +13,9 @@ import pl.put.poznan.info.model.Building;
 @RequestMapping("/api")
 public class BuildingInfoController {
 
+
+
+
     @RequestMapping(value = "/area/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getBuildingArea(@RequestBody String reqBody) {
         try{
