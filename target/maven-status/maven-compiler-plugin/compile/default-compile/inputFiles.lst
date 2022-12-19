@@ -1,3 +1,9 @@
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/app/TextTransformerApplication.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/logic/TextTransformer.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/rest/TextTransformerController.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\model\Building.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\model\Location.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\exceptions\JsonInputException.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\app\BuildingInfoApplication.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\logic\BuildingInfo.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\model\Level.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\model\Room.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\exceptions\CreateBuildingExceptions.java
+C:\Users\Kubi\Desktop\PUT_term5_IO_BuildingInfo\src\main\java\pl\put\poznan\info\rest\BuildingInfoController.java

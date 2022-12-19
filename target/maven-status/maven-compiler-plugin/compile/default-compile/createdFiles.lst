@@ -1,0 +1,9 @@
+pl\put\poznan\info\app\BuildingInfoApplication.class
+pl\put\poznan\info\rest\BuildingInfoController.class
+pl\put\poznan\info\model\Location.class
+pl\put\poznan\info\model\Room.class
+pl\put\poznan\info\exceptions\CreateBuildingExceptions.class
+pl\put\poznan\info\model\Level.class
+pl\put\poznan\info\model\Building.class
+pl\put\poznan\info\exceptions\JsonInputException.class
+pl\put\poznan\info\logic\BuildingInfo.class
