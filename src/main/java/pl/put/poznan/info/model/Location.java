@@ -27,4 +27,5 @@ public abstract class Location {
     public abstract float getCube();
     public abstract float getLightning();
     public abstract float getHeating();
+    public abstract float getRent();
 }

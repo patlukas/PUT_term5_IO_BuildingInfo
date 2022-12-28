@@ -94,4 +94,13 @@ public class Level extends Location{
         }
         return levelHeating / getCube();
     }
+
+    @Override
+    public float getRent() {
+        float levelRent = 0;
+        for (Location room : rooms){
+            levelRent += room.getRent();
+        }
+        return levelRent;
+    }
 }

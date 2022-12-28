@@ -68,8 +68,9 @@ public class BuildingInfo {
         float cube = readFloatValuesFromJson(jsonRoom, "cube", false);
         float heating = readFloatValuesFromJson(jsonRoom, "heating", true);
         float light = readFloatValuesFromJson(jsonRoom, "light", true);
+        float rent = readFloatValuesFromJson(jsonRoom, "rent", true);
 
-        Room room = new Room(id, name, area, cube, heating, light);
+        Room room = new Room(id, name, area, cube, heating, light, rent);
         level.addRoom(room);
     }
 
