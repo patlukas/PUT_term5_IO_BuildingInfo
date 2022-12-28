@@ -2,6 +2,7 @@ package pl.put.poznan.info.model;
 
 import pl.put.poznan.info.exceptions.JsonInputException;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -67,6 +68,25 @@ public class Building extends Location{
         return buildingHeating / levels.size();
     }
 
+    @Override
+    public float getRent() {
+        float buildingRent = 0;
+        for (Location level : levels){
+            buildingRent += level.getRent();
+        }
+        return buildingRent;
+    }
+
+    public ArrayList<Integer> getListRoomsWithLimitRent(float rentLimit) {
+        ArrayList<Integer> listRooms = new ArrayList<Integer>();
+        for (Level level : levels) {
+            for(Room room : level.getRooms()) {
+                if(room.getRent() <= rentLimit) listRooms.add(room.getId());
+            }
+        }
+        return listRooms;
+    }
+
     public float getAreaById(int id) throws JsonInputException{
         Location location = getLocationById(id);
         return location.getArea();
@@ -85,6 +105,11 @@ public class Building extends Location{
     public float getHeatingById(int id) throws JsonInputException{
         Location location = getLocationById(id);
         return location.getHeating();
+    }
+
+    public float getRentById(int id) throws JsonInputException{
+        Location location = getLocationById(id);
+        return location.getRent();
     }
 
     public Location getLocationById(int id) throws JsonInputException{

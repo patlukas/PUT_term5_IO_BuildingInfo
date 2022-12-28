@@ -9,6 +9,8 @@ import pl.put.poznan.info.exceptions.JsonInputException;
 import pl.put.poznan.info.logic.BuildingInfo;
 import pl.put.poznan.info.model.Building;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/api")
 public class BuildingInfoController {
@@ -56,6 +58,26 @@ public class BuildingInfoController {
         }
     }
 
+    @RequestMapping(value = "/rent/all", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getBuildingRent(@RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getRent());
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/roomsUnderRentLimit/{rentLimit}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getListRoomsWithRentUnderLimit(@PathVariable int rentLimit, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonArray(building.getListRoomsWithLimitRent(rentLimit));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/area/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAreaById(@PathVariable int id, @RequestBody String reqBody) {
         try {
@@ -96,10 +118,27 @@ public class BuildingInfoController {
         }
     }
 
+    @RequestMapping(value = "/rent/id/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getRentById(@PathVariable int id, @RequestBody String reqBody) {
+        try {
+            Building building = BuildingInfo.createBuilding(new JSONObject(reqBody));
+            return createSuccessReturnJsonString(building.getRentById(id));
+        } catch (JsonInputException e) {
+            return createErrorReturnJsonString(e.getMessage());
+        }
+    }
+
     private String createSuccessReturnJsonString(float result) {
         JSONObject res = new JSONObject();
         res.put("status", "Success");
         res.put("result", result);
+        return res.toString();
+    }
+
+    private String createSuccessReturnJsonArray(ArrayList<Integer> listResults) {
+        JSONObject res = new JSONObject();
+        res.put("status", "Success");
+        res.put("result", listResults);
         return res.toString();
     }
 
