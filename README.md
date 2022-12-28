@@ -18,6 +18,7 @@ Dla administratorów budynków, którzy pragną optymalizować koszty zarządzan
     - **cube** = kubatura pomieszczenia w m^3
     - **heating** = poziom zużycia energii ogrzewania (float)
     - **light** – łączna moc oświetlenia
+    - **rent** - cena wynajmu pomieszczenia
 
 ## API
   - **[POST] /api/area/all** - zwraca sumę powierzchni wszystkich pomieszczeń
@@ -40,6 +41,12 @@ Dla administratorów budynków, którzy pragną optymalizować koszty zarządzan
   - zużycie energii grzewczej w pomieszczeniu, jeżeli lokacja o ID jest pomieszceniem
   - średnie zużycie energii grzewczej na m^3 na poziomie, jeżeli lokacja o ID jest poziomem
   - średnie zużycie energii grzewczej na poziomach, jeżeli lokacja o ID jest budynkiem
+- **[POST] /api/rent/all** - zwraca sumę cen wynajmu wszystkich pomieszczeń w budynku
+- **[POST] /api/rent/id/{ID}** - zwraca:
+    - zwraca cenę wynajmu pomieszczenia, jeżeli lokacja o ID jest pomieszceniem
+    - zwraca sumę cen wynajmu wszystkich pomieszczeń na poziomie, jeżeli lokacja o ID jest poziomem
+    - zwraca sumę cen wynajmu wszystkich pomieszczeń w budynku, jeżeli lokacja o ID jest budynkiem
+- **[POST] /api/roomsUnderRentLimit/{RENTLIMIT}** - zwraca listę z ID pomieszczeń, które mają nie wyższą cenę wynajmu niż RENTLIMIT
 
 ### Request API Body
 ```
@@ -58,6 +65,7 @@ Dla administratorów budynków, którzy pragną optymalizować koszty zarządzan
                 "cube": <Float dodatni> - kubatura pomieszczenia w m^3
                 "heating": <Float nieujemny> - poziom zużycia energii grzewczej w pomieszczeniu
                 "light": <Float nieujemny> - łączna moc oświetlenia w pomieszczeniu
+                "rent": <Float nieujemny> - cena wynajmu pomieszczenia
             }...
         ]
     }...
@@ -80,14 +88,16 @@ Request body:
             "area": 10,
             "cube": 20,
             "heating": 10.5,
-            "light": 5.5
+            "light": 5.5,
+            "rent": 1
           },
           {
             "id": 4,
             "area": 12,
             "cube": 24,
             "heating": 10.5,
-            "light": 5.5
+            "light": 5.5,
+            "rent": 1
           }
         ]
       },
@@ -99,7 +109,8 @@ Request body:
             "area": 2,
             "cube": 10.0,
             "heating": 10.5,
-            "light": 5.5
+            "light": 5.5,
+            "rent": 2
           }
         ]
       }
@@ -155,7 +166,8 @@ Request body:
             "area": 1,
             "cube": 2,
             "heating": 3,
-            "light": 4
+            "light": 4,
+            "rent": 1
           },
           {
             "id": -6,
@@ -163,7 +175,8 @@ Request body:
             "area": 2,
             "cube": 1,
             "heating": 3,
-            "light": 4
+            "light": 4,
+            "rent": 3
           },
           {
             "id": -7,
@@ -171,7 +184,8 @@ Request body:
             "area": 1,
             "cube": 2,
             "heating": 3,
-            "light": 4
+            "light": 4,
+            "rent": 1
           },
           {
             "id": -8,
@@ -179,7 +193,8 @@ Request body:
             "area": 1,
             "cube": 2,
             "heating": 3,
-            "light": 4
+            "light": 4,
+            "rent": 1
           }
         ]
       }
@@ -202,4 +217,122 @@ Request body:
       "result": 3,
       "status": "Success"
     }
+  ```
+
+### Przykład 3 
+Request body:
+```json
+   {
+  "id": 5,
+  "levels": [
+    {
+      "id": 1,
+      "rooms": [
+        {
+          "id": 3,
+          "area": 1,
+          "cube": 2,
+          "heating": 3,
+          "light": 4,
+          "rent": 200
+        },
+        {
+          "id": 4,
+          "area": 2,
+          "cube": 1,
+          "heating": 3,
+          "light": 4,
+          "rent": 300
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "rooms": [
+        {
+          "id": 6,
+          "area": 1,
+          "cube": 2,
+          "heating": 3,
+          "light": 4,
+          "rent": 500
+        },
+        {
+          "id": 7,
+          "area": 2,
+          "cube": 1,
+          "heating": 3,
+          "light": 4,
+          "rent": 1100
+        }
+      ]
+    }
+  ]
+}
+```
+- **[POST] /api/rent/all**
+    - Odpowiedź:
+  ```json
+    {
+      "result": 2100,
+      "status": "Success"
+    }
+  ```
+
+- **[POST] /api/rent/id/5**
+    - Odpowiedź:
+  ```json
+    {
+      "result": 2100,
+      "status": "Success"
+    }
+  ```
+- **[POST] /api/rent/id/1**
+    - Odpowiedź:
+  ```json
+    {
+      "result": 500,
+      "status": "Success"
+    }
+  ```
+- **[POST] /api/rent/id/3**
+  - Odpowiedź:
+  ```json
+  {
+    "result": 200,
+    "status": "Success"
+  }
+  ```
+- **[POST] /api/roomsUnderRentLimit/100**
+    - Odpowiedź:
+  ```json
+  {
+    "result": [],
+    "status": "Success"
+  }
+  ```
+- **[POST] /api/roomsUnderRentLimit/1000**
+    - Odpowiedź:
+  ```json
+  {
+    "result": [
+        3,
+        4,
+        6
+    ],
+    "status": "Success"
+  }
+  ```
+- **[POST] /api/roomsUnderRentLimit/1100**
+    - Odpowiedź:
+  ```json
+  {
+    "result": [
+        3,
+        4,
+        6,
+        7
+    ],
+    "status": "Success"
+  }
   ```

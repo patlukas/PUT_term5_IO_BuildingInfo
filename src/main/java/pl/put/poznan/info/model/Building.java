@@ -2,6 +2,7 @@ package pl.put.poznan.info.model;
 
 import pl.put.poznan.info.exceptions.JsonInputException;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,6 +75,16 @@ public class Building extends Location{
             buildingRent += level.getRent();
         }
         return buildingRent;
+    }
+
+    public ArrayList<Integer> getListRoomsWithLimitRent(float rentLimit) {
+        ArrayList<Integer> listRooms = new ArrayList<Integer>();
+        for (Level level : levels) {
+            for(Room room : level.getRooms()) {
+                if(room.getRent() <= rentLimit) listRooms.add(room.getId());
+            }
+        }
+        return listRooms;
     }
 
     public float getAreaById(int id) throws JsonInputException{
